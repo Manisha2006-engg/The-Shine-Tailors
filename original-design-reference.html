@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Shine Tailors - Couture & Custom Tailoring</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            rose: '#881337', // Deep Burgundy/Rose
+                            lightrose: '#fff1f2',
+                            gold: '#d97706',
+                            goldlight: '#fef3c7',
+                            cream: '#fafaf9',
+                            dark: '#1c1917',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+        }
+        .rose-gradient {
+            background: linear-gradient(135deg, #881337 0%, #4c0519 100%);
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 15px rgba(217, 119, 6, 0.2);
+        }
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 font-sans text-stone-800 min-h-screen flex flex-col antialiased selection:bg-rose-900 selection:text-white">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-stone-900 text-amber-200 text-xs py-2 px-4 text-center font-medium tracking-wide flex justify-between items-center sm:px-8">
+        <div><i class="fa-solid fa-crown text-amber-400 mr-2"></i> Exquisite Bridal & Designer Tailoring | Specializing in Blouses, Chudidars & Aari Embroidery</div>
+        <div class="hidden md:flex items-center space-x-4 text-stone-300">
+            <span><i class="fa-solid fa-phone text-amber-400 mr-1"></i> +91 98765 43210</span>
+            <span><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i> T. Nagar, Chennai</span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- BRAND LOGO -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('showcase')">
+                    <div class="w-12 h-12 rounded-full rose-gradient flex items-center justify-center text-amber-300 text-xl font-serif font-bold shadow-md border border-amber-400/40">
+                        ST
+                    </div>
+                    <div>
+                        <h1 class="font-serif text-2xl font-bold tracking-tight text-rose-950 flex items-center gap-2">
+                            The Shine Tailors
+                            <span class="text-xs font-sans font-normal bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-300">Women's Boutique</span>
+                        </h1>
+                        <p class="text-xs text-stone-500 tracking-wider uppercase font-medium">Bespoke Fitting & Designer Stitching</p>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION TABS -->
+                <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm">
+                    <button onclick="switchTab('showcase')" id="nav-showcase" class="nav-btn px-4 py-2 rounded-lg text-rose-950 font-semibold bg-rose-50 border border-rose-200/60 transition">
+                        <i class="fa-solid fa-shirt mr-1.5 text-rose-700"></i> Design Portfolio
+                    </button>
+                    <button onclick="switchTab('customer-dash')" id="nav-customer-dash" class="nav-btn px-4 py-2 rounded-lg text-stone-600 hover:text-rose-900 hover:bg-stone-100 transition">
+                        <i class="fa-solid fa-user-gear mr-1.5 text-stone-500"></i> My Profile & Measurements
+                    </button>
+                    <button onclick="switchTab('order-form')" id="nav-order-form" class="nav-btn px-4 py-2 rounded-lg text-stone-600 hover:text-rose-900 hover:bg-stone-100 transition">
+                        <i class="fa-solid fa-scissors mr-1.5 text-stone-500"></i> Place Order
+                    </button>
+                    <button onclick="switchTab('bridal-panel')" id="nav-bridal-panel" class="nav-btn px-4 py-2 rounded-lg text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition">
+                        <i class="fa-solid fa-gem mr-1.5 text-amber-600"></i> Bridal Studio
+                    </button>
+                    <button onclick="switchTab('owner-admin')" id="nav-owner-admin" class="nav-btn px-4 py-2 rounded-lg text-stone-600 hover:text-rose-900 hover:bg-stone-100 transition relative">
+                        <i class="fa-solid fa-user-shield mr-1.5 text-stone-500"></i> Shop Admin
+                        <span id="admin-alert-dot" class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping hidden"></span>
+                        <span id="admin-alert-count" class="ml-1 px-1.5 py-0.5 text-xs font-bold bg-rose-800 text-white rounded-full">3</span>
+                    </button>
+                </nav>
+
+                <!-- MOBILE MENU BUTTON -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU DROPDOWN -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200 bg-white px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('showcase'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-stone-700 hover:bg-rose-50 hover:text-rose-900">
+                <i class="fa-solid fa-shirt mr-2 text-rose-700"></i> Design Portfolio
+            </button>
+            <button onclick="switchTab('customer-dash'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-stone-700 hover:bg-rose-50 hover:text-rose-900">
+                <i class="fa-solid fa-user-gear mr-2 text-stone-600"></i> Customer Profile & Measurements
+            </button>
+            <button onclick="switchTab('order-form'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-stone-700 hover:bg-rose-50 hover:text-rose-900">
+                <i class="fa-solid fa-scissors mr-2 text-stone-600"></i> Place Order
+            </button>
+            <button onclick="switchTab('bridal-panel'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-amber-900 bg-amber-50">
+                <i class="fa-solid fa-gem mr-2 text-amber-600"></i> Bridal / Marriage Tailoring Studio
+            </button>
+            <button onclick="switchTab('owner-admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md font-medium text-stone-700 hover:bg-rose-50 hover:text-rose-900">
+                <i class="fa-solid fa-user-shield mr-2 text-stone-600"></i> Shop Owner Admin Panel
+            </button>
+        </div>
+    </header>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast-container" class="fixed top-24 right-4 z-50 space-y-2 pointer-events-none max-w-sm w-full"></div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: DESIGN PORTFOLIO SHOWCASE           -->
+        <!-- ========================================== -->
+        <section id="tab-showcase" class="tab-content space-y-8">
+            <!-- HERO BANNER -->
+            <div class="relative rounded-3xl overflow-hidden rose-gradient text-white p-8 sm:p-12 shadow-xl border border-rose-900/50">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d97706_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="px-3 py-1 bg-amber-400/20 text-amber-200 border border-amber-400/30 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        Master Artisans Since 2012
+                    </span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold leading-tight">
+                        Perfect Fit, Timeless Grace & Handcrafted Detail
+                    </h2>
+                    <p class="text-stone-200 text-sm sm:text-base font-light">
+                        Explore our handcrafted gallery of bridal blouses, daily chudidars, and ornate Aari & Zardozi embroidery patterns tailored to your exact measurements.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <button onclick="switchTab('order-form')" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+                            Book Custom Stitching
+                        </button>
+                        <button onclick="switchTab('bridal-panel')" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-medium rounded-xl border border-white/20 transition backdrop-blur-sm">
+                            Bridal Consultation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PORTFOLIO FILTER & HEADER -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-b border-stone-200 pb-4">
+                <div>
+                    <h3 class="font-serif text-2xl font-bold text-stone-900">Our Tailoring Craft Gallery</h3>
+                    <p class="text-sm text-stone-500">Filter by category to view sample works from our boutique</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterGallery('all')" id="filter-all" class="gallery-filter-btn px-4 py-2 text-xs font-semibold rounded-lg bg-rose-900 text-white shadow-sm">
+                        All Designs
+                    </button>
+                    <button onclick="filterGallery('blouses')" id="filter-blouses" class="gallery-filter-btn px-4 py-2 text-xs font-semibold rounded-lg bg-stone-100 text-stone-600 hover:bg-stone-200">
+                        Designer Blouses
+                    </button>
+                    <button onclick="filterGallery('chudidar')" id="filter-chudidar" class="gallery-filter-btn px-4 py-2 text-xs font-semibold rounded-lg bg-stone-100 text-stone-600 hover:bg-stone-200">
+                        Chudidars & Suits
+                    </button>
+                    <button onclick="filterGallery('embroidery')" id="filter-embroidery" class="gallery-filter-btn px-4 py-2 text-xs font-semibold rounded-lg bg-stone-100 text-stone-600 hover:bg-stone-200">
+                        Aari & Embroidery
+                    </button>
+                </div>
+            </div>
+
+            <!-- PORTFOLIO GRID -->
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript populated -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: CUSTOMER DASHBOARD & MEASUREMENTS   -->
+        <!-- ========================================== -->
+        <section id="tab-customer-dash" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-stone-200">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-stone-100 pb-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-full bg-rose-100 text-rose-900 flex items-center justify-center font-bold text-2xl border-2 border-rose-300">
+                            <span id="cust-avatar">AD</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h2 class="font-serif text-2xl font-bold text-stone-900" id="cust-name-header">Ananya Das</h2>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-semibold">Active Client</span>
+                            </div>
+                            <p class="text-sm text-stone-500">Customer ID: <span class="font-mono font-medium text-stone-700" id="cust-id-display">ST-8842</span></p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="toggleMeasurementEdit()" id="btn-edit-measure" class="px-4 py-2 bg-rose-900 hover:bg-rose-950 text-white rounded-lg text-sm font-medium shadow-sm transition">
+                            <i class="fa-solid fa-pen-to-square mr-2"></i> Edit Measurements
+                        </button>
+                        <button onclick="switchTab('order-form')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-stone-950 rounded-lg text-sm font-semibold shadow-sm transition">
+                            <i class="fa-solid fa-plus mr-1"></i> New Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PROFILE INFO & MEASUREMENTS DUAL GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6">
+                    
+                    <!-- PERSONAL DETAILS CARD -->
+                    <div class="space-y-6">
+                        <div class="bg-stone-50 rounded-xl p-5 border border-stone-200">
+                            <h3 class="font-serif font-bold text-stone-900 text-lg border-b border-stone-200 pb-3 mb-4 flex items-center justify-between">
+                                <span>Personal Information</span>
+                                <i class="fa-solid fa-id-card text-stone-400"></i>
+                            </h3>
+                            <form id="cust-personal-form" class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-semibold text-stone-500 uppercase">Full Name</label>
+                                    <input type="text" id="cust-input-name" value="Ananya Das" disabled class="w-full mt-1 bg-white border border-stone-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none disabled:bg-stone-100 font-medium">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-xs font-semibold text-stone-500 uppercase">Age</label>
+                                        <input type="number" id="cust-input-age" value="28" disabled class="w-full mt-1 bg-white border border-stone-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none disabled:bg-stone-100 font-medium">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs font-semibold text-stone-500 uppercase">Phone</label>
+                                        <input type="text" id="cust-input-phone" value="+91 98765 12345" disabled class="w-full mt-1 bg-white border border-stone-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none disabled:bg-stone-100 font-medium">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-stone-500 uppercase">Delivery Address</label>
+                                    <textarea id="cust-input-address" rows="3" disabled class="w-full mt-1 bg-white border border-stone-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none disabled:bg-stone-100 font-medium">Flat 4B, Lotus Apartments, 12th Main Road, Anna Nagar, Chennai - 600040</textarea>
+                                </div>
+                                <div id="cust-save-personal-btn" class="hidden">
+                                    <button type="button" onclick="saveCustomerProfile()" class="w-full py-2 bg-emerald-700 text-white font-medium rounded-lg text-sm hover:bg-emerald-800">
+                                        Save Personal Profile
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- RECENT ORDERS SNAPSHOT -->
+                        <div class="bg-amber-50/60 rounded-xl p-5 border border-amber-200/60">
+                            <h4 class="font-serif font-bold text-amber-950 text-base mb-3 flex items-center justify-between">
+                                <span>Active Tailoring Orders</span>
+                                <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
+                            </h4>
+                            <div id="cust-orders-list" class="space-y-3">
+                                <!-- Javascript populates orders -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DETAILED MEASUREMENT SPECIFICATIONS -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white rounded-xl border border-stone-200 p-6">
+                            <div class="flex justify-between items-center border-b border-stone-200 pb-4 mb-6">
+                                <div>
+                                    <h3 class="font-serif font-bold text-stone-900 text-xl">Body Measurement Profile</h3>
+                                    <p class="text-xs text-stone-500">All measurements are saved in inches. Updated regularly by fitters or customer.</p>
+                                </div>
+                                <span class="bg-rose-50 text-rose-800 text-xs px-3 py-1 rounded-full border border-rose-200 font-medium" id="measure-last-updated">
+                                    Verified by Shop: Oct 2024
+                                </span>
+                            </div>
+
+                            <form id="cust-measurements-form">
+                                <!-- BLOUSES SPECIFICATIONS -->
+                                <div class="mb-6">
+                                    <h4 class="text-sm font-bold text-rose-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                        <i class="fa-solid fa-tape"></i> Blouse & Upper Body Specs
+                                    </h4>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Bust / Chest (in)</label>
+                                            <input type="number" step="0.5" id="m-bust" value="36" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Under Bust (in)</label>
+                                            <input type="number" step="0.5" id="m-underbust" value="31" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Blouse Length (in)</label>
+                                            <input type="number" step="0.5" id="m-blouselength" value="14.5" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Shoulder Width (in)</label>
+                                            <input type="number" step="0.5" id="m-shoulder" value="14" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Front Neck Depth</label>
+                                            <input type="number" step="0.5" id="m-frontneck" value="6.5" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Back Neck Depth</label>
+                                            <input type="number" step="0.5" id="m-backneck" value="8.5" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Sleeve Length (in)</label>
+                                            <input type="number" step="0.5" id="m-sleevelength" value="10.5" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Arm Hole / Bicep</label>
+                                            <input type="number" step="0.5" id="m-armhole" value="12" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CHUDIDAR & BOTTOMS SPECIFICATIONS -->
+                                <div class="mb-6 pt-4 border-t border-stone-200">
+                                    <h4 class="text-sm font-bold text-rose-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                        <i class="fa-solid fa-ruler-vertical"></i> Chudidar & Kurti Specs
+                                    </h4>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Waist (in)</label>
+                                            <input type="number" step="0.5" id="m-waist" value="30" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Hip (in)</label>
+                                            <input type="number" step="0.5" id="m-hip" value="39" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Kameez Length</label>
+                                            <input type="number" step="0.5" id="m-kameezlength" value="42" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs font-semibold text-stone-600">Pant Length (in)</label>
+                                            <input type="number" step="0.5" id="m-pantlength" value="38" disabled class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-2.5 text-center font-bold text-stone-800 disabled:bg-stone-100">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SPECIAL NOTES -->
+                                <div class="pt-2">
+                                    <label class="text-xs font-semibold text-stone-600 uppercase">Body Shape & Fitting Notes</label>
+                                    <textarea id="m-notes" disabled rows="2" class="measure-input w-full mt-1 bg-stone-50 border border-stone-200 rounded-lg p-3 text-sm disabled:bg-stone-100">Prefers padded blouse with deep square back neck. Pushes for high side cuts on Chudidar tops.</textarea>
+                                </div>
+
+                                <div id="cust-save-measure-btn" class="mt-6 hidden flex gap-3">
+                                    <button type="button" onclick="saveCustomerMeasurements()" class="flex-1 py-3 bg-rose-900 text-white font-bold rounded-xl shadow-md hover:bg-rose-950 transition">
+                                        Save Updated Measurements
+                                    </button>
+                                    <button type="button" onclick="toggleMeasurementEdit()" class="px-6 py-3 bg-stone-200 text-stone-700 font-semibold rounded-xl hover:bg-stone-300">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: ONLINE ORDER PLACEMENT FORM         -->
+        <!-- ========================================== -->
+        <section id="tab-order-form" class="tab-content hidden space-y-8">
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-stone-200">
+                <div class="text-center space-y-2 mb-8">
+                    <span class="text-xs font-bold text-rose-800 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-full border border-rose-200">Tailoring Order Booking</span>
+                    <h2 class="font-serif text-3xl font-bold text-stone-900">Custom Stitching Request</h2>
+                    <p class="text-sm text-stone-500">Fill in garment details. The shop will review and assign an official delivery date.</p>
+                </div>
+
+                <form id="order-booking-form" onsubmit="handlePlaceOrder(event)" class="space-y-6">
+                    <!-- CUSTOMER SELECT / RECOGNITION -->
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-check text-rose-800 text-xl"></i>
+                            <div>
+                                <p class="text-xs text-stone-500 uppercase font-bold">Ordering As</p>
+                                <p class="font-bold text-stone-900" id="order-form-cust-name">Ananya Das (+91 98765 12345)</p>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-1 rounded-md">
+                            <i class="fa-solid fa-circle-check mr-1"></i> Profile Measurements Linked
+                        </span>
+                    </div>
+
+                    <!-- GARMENT TYPE SELECTION -->
+                    <div>
+                        <label class="block text-sm font-bold text-stone-800 mb-2">Select Garment Type *</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="border-2 border-stone-200 hover:border-rose-800 rounded-xl p-4 cursor-pointer text-center flex flex-col items-center justify-center transition bg-white has-[:checked]:border-rose-900 has-[:checked]:bg-rose-50/40">
+                                <input type="radio" name="garment_type" value="Blouse" checked class="hidden">
+                                <i class="fa-solid fa-shirt text-2xl text-rose-800 mb-2"></i>
+                                <span class="font-bold text-sm block">Designer Blouse</span>
+                                <span class="text-xs text-stone-500">Regular / Padded / Pattern</span>
+                            </label>
+
+                            <label class="border-2 border-stone-200 hover:border-rose-800 rounded-xl p-4 cursor-pointer text-center flex flex-col items-center justify-center transition bg-white has-[:checked]:border-rose-900 has-[:checked]:bg-rose-50/40">
+                                <input type="radio" name="garment_type" value="Chudidar" class="hidden">
+                                <i class="fa-solid fa-person-dress text-2xl text-rose-800 mb-2"></i>
+                                <span class="font-bold text-sm block">Chudidar / Salwar</span>
+                                <span class="text-xs text-stone-500">Suit / Anarkali / Palazzo</span>
+                            </label>
+
+                            <label class="border-2 border-stone-200 hover:border-rose-800 rounded-xl p-4 cursor-pointer text-center flex flex-col items-center justify-center transition bg-white has-[:checked]:border-rose-900 has-[:checked]:bg-rose-50/40">
+                                <input type="radio" name="garment_type" value="Embroidery" class="hidden">
+                                <i class="fa-solid fa-wand-magic-sparkles text-2xl text-rose-800 mb-2"></i>
+                                <span class="font-bold text-sm block">Aari Embroidery</span>
+                                <span class="text-xs text-stone-500">Custom Thread & Bead Work</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- SPECIFICATIONS GRID -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Fabric Source *</label>
+                            <select id="order-fabric-source" required class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                                <option value="Provided at Shop">I will submit fabric material at shop</option>
+                                <option value="Shop Pickup Required">Request shop agent fabric pickup</option>
+                                <option value="Purchase From Shop Store">Select lining & cloth from Shine Tailors store</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Requested Preferred Date *</label>
+                            <input type="date" id="order-requested-date" required class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                            <span class="text-xs text-stone-400 mt-1 block">Final delivery date confirmed by owner</span>
+                        </div>
+                    </div>
+
+                    <!-- NECK & STYLE OPTIONS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Front Neck Style</label>
+                            <input type="text" id="order-neck-style" placeholder="e.g. Sweetheart, Round, U-Shape" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-stone-700 mb-1">Back Neck & Sleeve Work</label>
+                            <input type="text" id="order-back-style" placeholder="e.g. Deep Oval with Tassels, Elbow Sleeve" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                        </div>
+                    </div>
+
+                    <!-- DESIGN SAMPLE IMAGE / REFERENCE LINK -->
+                    <div>
+                        <label class="block text-sm font-semibold text-stone-700 mb-1">Design Reference Image Link or Notes</label>
+                        <input type="url" id="order-design-url" placeholder="https://example.com/sample-design.jpg (Optional)" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    </div>
+
+                    <!-- SPECIAL STITCHING INSTRUCTIONS -->
+                    <div>
+                        <label class="block text-sm font-semibold text-stone-700 mb-1">Custom Stitching Instructions / Piping / Border Details</label>
+                        <textarea id="order-instructions" rows="3" placeholder="Mention piping color, cup padding requirements, margin allowance, zipper preference..." class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-rose-800 outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-rose-900 hover:bg-rose-950 text-white font-bold text-base rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Submit Tailoring Order
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: MARRIAGE / BRIDAL TAILORING PANEL   -->
+        <!-- ========================================== -->
+        <section id="tab-bridal-panel" class="tab-content hidden space-y-8">
+            <!-- BRIDAL HEADER -->
+            <div class="rounded-3xl p-8 sm:p-12 gold-border-glow border-2 border-amber-300 bg-stone-900 text-amber-50 relative overflow-hidden shadow-2xl">
+                <div class="absolute right-0 top-0 opacity-10 font-serif text-9xl text-amber-300 pointer-events-none select-none">
+                    Bridal
+                </div>
+                <div class="max-w-2xl space-y-4 relative z-10">
+                    <span class="bg-amber-400 text-stone-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                        VIP Wedding Couture Service
+                    </span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-amber-200 leading-tight">
+                        Marriage Tailoring & Bridal Trousseau Studio
+                    </h2>
+                    <p class="text-stone-300 text-sm sm:text-base font-light">
+                        Dedicated bridal stitching suite with custom Aari Zardozi work, multi-outfit bridal packages, trial fittings, and guaranteed express wedding delivery.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- BRIDAL PACKAGES INFO -->
+                <div class="space-y-4">
+                    <h3 class="font-serif text-xl font-bold text-stone-900">Bridal Packages Included</h3>
+                    
+                    <div class="bg-white p-5 rounded-2xl border border-amber-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-amber-950">Royal Wedding Package</h4>
+                            <span class="text-xs bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full">3 Outfits</span>
+                        </div>
+                        <ul class="text-xs text-stone-600 space-y-2 list-disc list-inside">
+                            <li>1 Heavily Embroidered Muhurtham Blouse</li>
+                            <li>1 Reception Designer Blouse / Lehenga Suit</li>
+                            <li>1 Sangeet / Mehendi Anarkali Outfit</li>
+                            <li>Double Stitch Trial & Custom Fitting Guarantee</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-stone-900">Bridal & Bridesmaids Combo</h4>
+                            <span class="text-xs bg-rose-100 text-rose-900 font-bold px-2.5 py-0.5 rounded-full">Bulk Custom</span>
+                        </div>
+                        <ul class="text-xs text-stone-600 space-y-2 list-disc list-inside">
+                            <li>Bride Haupt Blouse + 5 Bridesmaid Blouses</li>
+                            <li>Color-Matched Border & Piping Stitching</li>
+                            <li>Priority Delivery Management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- BRIDAL BOOKING FORM -->
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 sm:p-8 border border-amber-200 shadow-sm">
+                    <h3 class="font-serif text-2xl font-bold text-stone-900 mb-1">Book Marriage Tailoring Appointment</h3>
+                    <p class="text-xs text-stone-500 mb-6">Our senior master artisan will schedule a measurement and motif consultation for your wedding.</p>
+
+                    <form onsubmit="handleBridalOrder(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Bride's Name *</label>
+                                <input type="text" id="bridal-name" required value="Ananya Das" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Wedding Date *</label>
+                                <input type="date" id="bridal-wedding-date" required class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Bridal Package Choice</label>
+                                <select id="bridal-package" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="Royal Wedding Package (3 Outfits)">Royal Wedding Package (3 Outfits)</option>
+                                    <option value="Single Muhurtham Heavy Blouse">Single Muhurtham Heavy Blouse</option>
+                                    <option value="Bridal & Bridesmaids Combo">Bridal & Bridesmaids Combo</option>
+                                    <option value="Custom Trousseau tailoring">Custom Trousseau tailoring</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Embroidery Style</label>
+                                <select id="bridal-embroidery-type" class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="Heavy Aari Zardozi Peacock Motif">Heavy Aari Zardozi Peacock Motif</option>
+                                    <option value="Cutwork & Threadwork Floral">Cutwork & Threadwork Floral</option>
+                                    <option value="Kundhan & Antique Bead Work">Kundhan & Antique Bead Work</option>
+                                    <option value="Minimal Classic Embroidery">Minimal Classic Embroidery</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Bridal Custom Requests & Color Theme</label>
+                            <textarea id="bridal-notes" rows="3" placeholder="Mention saree colors, blouse fabric type, sleeve preference (elbow/short), hanging latkan requirements..." class="w-full border border-stone-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-600 to-amber-700 text-stone-950 font-bold rounded-xl shadow-md hover:from-amber-700 hover:to-amber-800 transition">
+                            <i class="fa-solid fa-crown mr-2"></i> Submit Bridal Tailoring Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: SHOP OWNER ADMIN DASHBOARD          -->
+        <!-- ========================================== -->
+        <section id="tab-owner-admin" class="tab-content hidden space-y-8">
+            
+            <!-- ADMIN TOP BAR & SYSTEM STATS -->
+            <div class="bg-stone-900 text-white rounded-2xl p-6 shadow-md border border-stone-800">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-stone-800 pb-5">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="font-serif text-2xl font-bold text-amber-200">Shop Control Center</h2>
+                            <span class="bg-rose-900 text-rose-200 text-xs px-2.5 py-0.5 rounded-full font-mono">Owner Portal</span>
+                        </div>
+                        <p class="text-xs text-stone-400">Manage orders, update measurements, assign delivery dates & track alerts</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="openAddNewCustomerModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-stone-950 text-xs font-bold rounded-lg shadow-sm">
+                            <i class="fa-solid fa-user-plus mr-1"></i> New Customer Measurement
+                        </button>
+                        <button onclick="openAddPortfolioModal()" class="px-4 py-2 bg-rose-800 hover:bg-rose-900 text-white text-xs font-bold rounded-lg shadow-sm">
+                            <i class="fa-solid fa-upload mr-1"></i> Upload Work Portfolio
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ALERT STAT CARDS -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-5">
+                    <div class="bg-stone-800/80 p-4 rounded-xl border border-stone-700 flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-bell-concierge"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-stone-400">Due Today</p>
+                            <p class="text-xl font-bold text-white" id="stat-due-today">1</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-stone-800/80 p-4 rounded-xl border border-stone-700 flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-stone-400">Due in 2-3 Days</p>
+                            <p class="text-xl font-bold text-white" id="stat-due-soon">2</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-800/80 p-4 rounded-xl border border-stone-700 flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-stone-400">Pending Approval</p>
+                            <p class="text-xl font-bold text-white" id="stat-pending">2</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-800/80 p-4 rounded-xl border border-stone-700 flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-stone-400">Total Active Orders</p>
+                            <p class="text-xl font-bold text-white" id="stat-total">5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AUTOMATED DELIVERY NOTIFICATION CENTER (CRITICAL FEATURE) -->
+            <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-3 h-3 bg-red-600 rounded-full animate-ping"></div>
+                        <h3 class="font-serif font-bold text-rose-950 text-xl flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-700"></i> Delivery Alert System
+                        </h3>
+                    </div>
+                    <span class="text-xs font-semibold text-rose-800 bg-rose-100 px-3 py-1 rounded-full border border-rose-300">Auto-Notifies 2-3 Days Before Due</span>
+                </div>
+                
+                <div id="admin-delivery-alerts-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Javascript generated delivery notifications -->
+                </div>
+            </div>
+
+            <!-- ORDERS MANAGEMENT TABLE -->
+            <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-stone-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h3 class="font-serif font-bold text-stone-900 text-xl">All Tailoring Orders</h3>
+                        <p class="text-xs text-stone-500">Accept/Reject orders, assign shop delivery dates, and update statuses</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="order-search" oninput="renderAdminOrders()" placeholder="Search customer or ID..." class="px-3 py-1.5 border border-stone-300 rounded-lg text-xs outline-none focus:ring-2 focus:ring-rose-800">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-stone-600">
+                        <thead class="bg-stone-50 text-xs font-bold text-stone-700 uppercase border-b border-stone-200">
+                            <tr>
+                                <th class="p-4">Order ID & Date</th>
+                                <th class="p-4">Customer Details</th>
+                                <th class="p-4">Garment & Specs</th>
+                                <th class="p-4">Assigned Delivery Date</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table-body" class="divide-y divide-stone-100">
+                            <!-- Javascript populated orders -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CUSTOMERS MEASUREMENT DATABASE ACCESS MANAGER -->
+            <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 space-y-4">
+                <div class="flex justify-between items-center border-b border-stone-100 pb-4">
+                    <div>
+                        <h3 class="font-serif font-bold text-stone-900 text-xl">Customer Measurement Database</h3>
+                        <p class="text-xs text-stone-500">View or update measurement profiles for registered shop customers</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="admin-customer-cards-container">
+                    <!-- Javascript populated customer profiles -->
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 mt-16 border-t border-stone-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full rose-gradient flex items-center justify-center text-amber-300 font-serif font-bold text-sm">ST</div>
+                    <span class="font-serif font-bold text-lg text-white">The Shine Tailors</span>
+                </div>
+                <p class="text-stone-400 leading-relaxed">
+                    Exclusive ladies boutique specializing in bespoke bridal blouses, designer chudidars, and authentic handcrafted Aari embroidery work.
+                </p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="text-white font-bold text-sm uppercase">Shop Hours & Location</h4>
+                <p><i class="fa-solid fa-clock text-amber-400 mr-2"></i> Mon - Sat: 9:30 AM - 9:00 PM</p>
+                <p><i class="fa-solid fa-location-dot text-amber-400 mr-2"></i> #42, Usman Road, T. Nagar, Chennai - 600017</p>
+                <p><i class="fa-solid fa-phone text-amber-400 mr-2"></i> Direct Hotline: +91 98765 43210</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="text-white font-bold text-sm uppercase">Quick Role Navigation</h4>
+                <div class="flex flex-col space-y-1">
+                    <button onclick="switchTab('showcase')" class="text-left hover:text-amber-300 transition">Design Catalog</button>
+                    <button onclick="switchTab('customer-dash')" class="text-left hover:text-amber-300 transition">Customer Measurement Portal</button>
+                    <button onclick="switchTab('bridal-panel')" class="text-left hover:text-amber-300 transition">Marriage Tailoring Suite</button>
+                    <button onclick="switchTab('owner-admin')" class="text-left hover:text-amber-300 transition">Shop Owner Admin Dashboard</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-stone-800 text-center py-4 text-stone-500">
+            © 2026 The Shine Tailors. All Rights Reserved. Bespoke Women's Fashion Software.
+        </div>
+    </footer>
+
+    <!-- MODAL: ADD / EDIT PORTFOLIO ITEM -->
+    <div id="modal-portfolio" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-stone-200">
+            <div class="flex justify-between items-center border-b border-stone-200 pb-3 mb-4">
+                <h3 class="font-serif font-bold text-stone-900 text-xl">Upload New Design Showcase Work</h3>
+                <button onclick="closeModal('modal-portfolio')" class="text-stone-400 hover:text-stone-700 text-xl">&times;</button>
+            </div>
+            <form onsubmit="handleUploadPortfolio(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Design Title *</label>
+                    <input type="text" id="port-title" required placeholder="e.g. Royal Peacock Aari Blouse" class="w-full border border-stone-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Category *</label>
+                    <select id="port-category" class="w-full border border-stone-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                        <option value="blouses">Designer Blouses</option>
+                        <option value="chudidar">Chudidar & Suits</option>
+                        <option value="embroidery">Aari & Embroidery Work</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Image URL *</label>
+                    <input type="url" id="port-image" required placeholder="https://images.unsplash.com/photo-..." class="w-full border border-stone-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    <span class="text-xs text-stone-400">Uses placeholder image if empty</span>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Description & Specs</label>
+                    <textarea id="port-desc" rows="2" placeholder="Detail thread types, fitting features..." class="w-full border border-stone-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-rose-800 outline-none"></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" class="flex-1 py-3 bg-rose-900 text-white font-bold rounded-xl text-sm hover:bg-rose-950">Publish To Showcase</button>
+                    <button type="button" onclick="closeModal('modal-portfolio')" class="px-5 py-3 bg-stone-200 text-stone-700 font-bold rounded-xl text-sm">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD NEW CUSTOMER MEASUREMENT (OWNER ADMIN) -->
+    <div id="modal-add-customer" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-stone-200 pb-3 mb-4">
+                <h3 class="font-serif font-bold text-stone-900 text-xl">Take & Record New Customer Measurements</h3>
+                <button onclick="closeModal('modal-add-customer')" class="text-stone-400 hover:text-stone-700 text-xl">&times;</button>
+            </div>
+            <form onsubmit="handleAdminAddNewCustomer(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Customer Full Name *</label>
+                        <input type="text" id="new-c-name" required placeholder="e.g. Priya Sharma" class="w-full border border-stone-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Phone Number *</label>
+                        <input type="text" id="new-c-phone" required placeholder="+91 98765 00000" class="w-full border border-stone-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Age</label>
+                        <input type="number" id="new-c-age" placeholder="25" class="w-full border border-stone-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Bust Size (in)</label>
+                        <input type="number" step="0.5" id="new-c-bust" placeholder="34" class="w-full border border-stone-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-800 outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Waist (in)</label>
+                        <input type="number" step="0.5" id="new-c-waist" placeholder="28" class="w-full border border-stone-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Hip (in)</label>
+                        <input type="number" step="0.5" id="new-c-hip" placeholder="38" class="w-full border border-stone-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Shoulder (in)</label>
+                        <input type="number" step="0.5" id="new-c-shoulder" placeholder="13.5" class="w-full border border-stone-300 rounded-lg p-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Address</label>
+                    <textarea id="new-c-address" rows="2" placeholder="Address details..." class="w-full border border-stone-300 rounded-lg p-2 text-sm"></textarea>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" class="flex-1 py-3 bg-rose-900 text-white font-bold rounded-xl text-sm hover:bg-rose-950">Save To Database</button>
+                    <button type="button" onclick="closeModal('modal-add-customer')" class="px-5 py-3 bg-stone-200 text-stone-700 font-bold rounded-xl text-sm">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // INITIAL MOCK DATA STATE
+        // ==========================================
+        
+        // Helper to format dates
+        function getFormattedDate(offsetDays = 0) {
+            const date = new Date();
+            date.setDate(date.getDate() + offsetDays);
+            return date.toISOString().split('T')[0];
+        }
+
+        // Active Customer Profile Data
+        let currentCustomer = {
+            id: 'ST-8842',
+            name: 'Ananya Das',
+            age: 28,
+            phone: '+91 98765 12345',
+            address: 'Flat 4B, Lotus Apartments, 12th Main Road, Anna Nagar, Chennai - 600040',
+            measurements: {
+                bust: 36,
+                underbust: 31,
+                blouselength: 14.5,
+                shoulder: 14,
+                frontneck: 6.5,
+                backneck: 8.5,
+                sleevelength: 10.5,
+                armhole: 12,
+                waist: 30,
+                hip: 39,
+                kameezlength: 42,
+                pantlength: 38,
+                notes: 'Prefers padded blouse with deep square back neck. Pushes for high side cuts on Chudidar tops.'
+            },
+            lastVerified: 'Oct 24, 2024'
+        };
+
+        // All Customer Database (For Owner Admin)
+        let customersDatabase = [
+            currentCustomer,
+            {
+                id: 'ST-4102',
+                name: 'Kavitha Ram',
+                age: 34,
+                phone: '+91 94441 98765',
+                address: 'No 14, Usman Road, T. Nagar, Chennai',
+                measurements: { bust: 38, waist: 34, hip: 42, shoulder: 15 },
+                lastVerified: 'Nov 01, 2024'
+            },
+            {
+                id: 'ST-7199',
+                name: 'Meera Krishnan',
+                age: 24,
+                phone: '+91 91234 56789',
+                address: 'Velachery Main Rd, Chennai',
+                measurements: { bust: 32, waist: 26, hip: 35, shoulder: 13 fontneck: 6 },
+                lastVerified: 'Nov 05, 2024'
+            }
+        ];
+
+        // Sample Portfolio Gallery
+        let portfolioItems = [
+            {
+                id: 1,
+                title: 'Heavy Aari Zardozi Bridal Blouse',
+                category: 'blouses',
+                image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
+                desc: 'Deep maroon raw silk featuring intricate peacock gold Zardozi work, pearl embellishments and maggam borders.'
+            },
+            {
+                id: 2,
+                title: 'Silk Chudidar Set with Heavy Dupatta',
+                category: 'chudidar',
+                image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80',
+                desc: 'Custom stitched bottled green chudidar suit with boat neck piping and fitted sleeve cut.'
+            },
+            {
+                id: 3,
+                title: 'Handcrafted Cutwork Neck Embroidery',
+                category: 'embroidery',
+                image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
+                desc: 'Detailed threadwork back-neck motif featuring handcrafted floral vines and antique bead trim.'
+            },
+            {
+                id: 4,
+                title: 'Elbow Sleeve Kundan Blouse',
+                category: 'blouses',
+                image: 'https://images.unsplash.com/photo-1583391733975-2980f76985a9?auto=format&fit=crop&w=600&q=80',
+                desc: 'Pastel pink blouse tailored with padded front, elbow sleeve zari borders, and dori tassels.'
+            },
+            {
+                id: 5,
+                title: 'Anarkali Style Designer Suit',
+                category: 'chudidar',
+                image: 'https://images.unsplash.com/photo-1610030469852-59bc7f2df107?auto=format&fit=crop&w=600&q=80',
+                desc: 'Full flair 16-kali Anarkali suit with gold thread lining and fitted tailored waistline.'
+            },
+            {
+                id: 6,
+                title: 'Royal Temple Motif Aari Sleeve Work',
+                category: 'embroidery',
+                image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=80',
+                desc: 'Exclusive temple design with gold stone highlights for wedding reception blouses.'
+            }
+        ];
+
+        // Tailoring Orders State
+        let ordersData = [
+            {
+                id: 'ORD-9021',
+                customerName: 'Ananya Das',
+                customerPhone: '+91 98765 12345',
+                garmentType: 'Blouse',
+                fabricSource: 'Provided at Shop',
+                neckStyle: 'Deep U Back with Dori',
+                orderDate: getFormattedDate(-4),
+                requestedDate: getFormattedDate(0), // DUE TODAY
+                deliveryDate: getFormattedDate(0),   // ASSIGNED TODAY
+                status: 'Accepted',
+                isBridal: false,
+                notes: 'Padded front required. Gold piping on sleeve rims.'
+            },
+            {
+                id: 'ORD-9022',
+                customerName: 'Kavitha Ram',
+                customerPhone: '+91 94441 98765',
+                garmentType: 'Chudidar',
+                fabricSource: 'Shop Store Purchase',
+                neckStyle: 'Boat Neck',
+                orderDate: getFormattedDate(-3),
+                requestedDate: getFormattedDate(2), // DUE IN 2 DAYS
+                deliveryDate: getFormattedDate(2),   // ASSIGNED IN 2 DAYS
+                status: 'Accepted',
+                isBridal: false,
+                notes: 'Straight cut pant with side pocket.'
+            },
+            {
+                id: 'ORD-9023',
+                customerName: 'Meera Krishnan',
+                customerPhone: '+91 91234 56789',
+                garmentType: 'Embroidery',
+                fabricSource: 'Provided at Shop',
+                neckStyle: 'Peacock Aari Sleeve',
+                orderDate: getFormattedDate(-1),
+                requestedDate: getFormattedDate(3), // DUE IN 3 DAYS
+                deliveryDate: getFormattedDate(3),   // ASSIGNED IN 3 DAYS
+                status: 'In Progress',
+                isBridal: false,
+                notes: 'Gold beads only, no silver.'
+            },
+            {
+                id: 'ORD-9024',
+                customerName: 'Ananya Das',
+                customerPhone: '+91 98765 12345',
+                garmentType: 'Bridal Package',
+                fabricSource: 'Provided at Shop',
+                neckStyle: 'Royal Wedding Suite',
+                orderDate: getFormattedDate(0),
+                requestedDate: getFormattedDate(12),
+                deliveryDate: 'Pending Assignment',
+                status: 'Pending',
+                isBridal: true,
+                notes: 'Package: Royal Wedding Package (3 Outfits). Embroidery: Heavy Aari Zardozi Peacock Motif.'
+            }
+        ];
+
+
+        // ==========================================
+        // APP INITIALIZATION & TAB NAVIGATION
+        // ==========================================
+        window.onload = function() {
+            renderGallery('all');
+            renderCustomerProfile();
+            renderCustomerOrdersList();
+            renderAdminOrders();
+            renderAdminCustomerCards();
+            updateAlertNotificationCount();
+
+            // Default min date for order form to today
+            const todayStr = getFormattedDate(0);
+            document.getElementById('order-requested-date').min = todayStr;
+            document.getElementById('bridal-wedding-date').min = todayStr;
+        };
+
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Un-highlight nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-50', 'text-rose-950', 'font-semibold', 'border', 'border-rose-200/60');
+                btn.classList.add('text-stone-600');
+            });
+
+            // Show current tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            // Highlight nav button
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn && tabId !== 'bridal-panel') {
+                activeBtn.classList.add('bg-rose-50', 'text-rose-950', 'font-semibold', 'border', 'border-rose-200/60');
+                activeBtn.classList.remove('text-stone-600');
+            }
+
+            // Scroll top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-stone-900 text-amber-300 border-amber-500/40' : 'bg-rose-900 text-white border-rose-700';
+            const icon = type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-triangle-exclamation text-amber-400';
+
+            toast.className = `p-4 rounded-xl shadow-2xl border flex items-center space-x-3 text-sm pointer-events-auto transition transform translate-y-2 ${bgColor}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-lg"></i>
+                <span class="font-medium flex-1">${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-stone-400 hover:text-white">&times;</button>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // ==========================================
+        // SHOWCASE PORTFOLIO ENGINE
+        // ==========================================
+        function renderGallery(filter = 'all') {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? portfolioItems : portfolioItems.filter(item => item.category === filter);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-md transition group flex flex-col";
+                card.innerHTML = `
+                    <div class="relative h-64 overflow-hidden bg-stone-100">
+                        <img src="${item.image}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400/881337/ffffff?text=${encodeURIComponent(item.title)}'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-sm text-amber-300 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-400/30 uppercase">
+                            ${item.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h4 class="font-serif font-bold text-lg text-stone-900 group-hover:text-rose-900 transition">${item.title}</h4>
+                            <p class="text-xs text-stone-500 mt-1 line-clamp-2">${item.desc}</p>
+                        </div>
+                        <button onclick="switchTab('order-form')" class="w-full py-2 bg-stone-100 hover:bg-rose-900 hover:text-white text-stone-800 text-xs font-bold rounded-lg transition text-center">
+                            Order Stitching Like This
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterGallery(cat) {
+            document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-900', 'text-white');
+                btn.classList.add('bg-stone-100', 'text-stone-600');
+            });
+            const selectedBtn = document.getElementById('filter-' + cat);
+            if (selectedBtn) {
+                selectedBtn.classList.add('bg-rose-900', 'text-white');
+                selectedBtn.classList.remove('bg-stone-100', 'text-stone-600');
+            }
+            renderGallery(cat);
+        }
+
+        function handleUploadPortfolio(e) {
+            e.preventDefault();
+            const title = document.getElementById('port-title').value;
+            const category = document.getElementById('port-category').value;
+            let image = document.getElementById('port-image').value;
+            const desc = document.getElementById('port-desc').value;
+
+            if (!image) {
+                image = `https://placehold.co/600x400/881337/ffffff?text=${encodeURIComponent(title)}`;
+            }
+
+            const newItem = {
+                id: Date.now(),
+                title,
+                category,
+                image,
+                desc: desc || 'Custom boutique design work by The Shine Tailors.'
+            };
+
+            portfolioItems.unshift(newItem);
+            renderGallery('all');
+            closeModal('modal-portfolio');
+            showToast('New design work successfully published to website showcase!');
+        }
+
+
+        // ==========================================
+        // CUSTOMER PROFILE & MEASUREMENTS ENGINE
+        // ==========================================
+        function renderCustomerProfile() {
+            document.getElementById('cust-name-header').innerText = currentCustomer.name;
+            document.getElementById('cust-avatar').innerText = currentCustomer.name.split(' ').map(n=>n[0]).join('');
+            document.getElementById('cust-id-display').innerText = currentCustomer.id;
+            document.getElementById('cust-input-name').value = currentCustomer.name;
+            document.getElementById('cust-input-age').value = currentCustomer.age;
+            document.getElementById('cust-input-phone').value = currentCustomer.phone;
+            document.getElementById('cust-input-address').value = currentCustomer.address;
+            document.getElementById('order-form-cust-name').innerText = `${currentCustomer.name} (${currentCustomer.phone})`;
+
+            // Populate measurement values
+            const m = currentCustomer.measurements;
+            document.getElementById('m-bust').value = m.bust || '';
+            document.getElementById('m-underbust').value = m.underbust || '';
+            document.getElementById('m-blouselength').value = m.blouselength || '';
+            document.getElementById('m-shoulder').value = m.shoulder || '';
+            document.getElementById('m-frontneck').value = m.frontneck || '';
+            document.getElementById('m-backneck').value = m.backneck || '';
+            document.getElementById('m-sleevelength').value = m.sleevelength || '';
+            document.getElementById('m-armhole').value = m.armhole || '';
+            document.getElementById('m-waist').value = m.waist || '';
+            document.getElementById('m-hip').value = m.hip || '';
+            document.getElementById('m-kameezlength').value = m.kameezlength || '';
+            document.getElementById('m-pantlength').value = m.pantlength || '';
+            document.getElementById('m-notes').value = m.notes || '';
+            document.getElementById('measure-last-updated').innerText = 'Verified: ' + currentCustomer.lastVerified;
+        }
+
+        function toggleMeasurementEdit() {
+            const inputs = document.querySelectorAll('.measure-input, #cust-input-name, #cust-input-age, #cust-input-phone, #cust-input-address');
+            const isDisabled = inputs[0].disabled;
+
+            inputs.forEach(el => el.disabled = !isDisabled);
+            
+            document.getElementById('cust-save-measure-btn').classList.toggle('hidden');
+            document.getElementById('cust-save-personal-btn').classList.toggle('hidden');
+            
+            const btn = document.getElementById('btn-edit-measure');
+            if (isDisabled) {
+                btn.innerHTML = `<i class="fa-solid fa-xmark mr-1"></i> Cancel Editing`;
+                btn.classList.replace('bg-rose-900', 'bg-stone-600');
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-pen-to-square mr-2"></i> Edit Measurements`;
+                btn.classList.replace('bg-stone-600', 'bg-rose-900');
+            }
+        }
+
+        function saveCustomerMeasurements() {
+            const m = currentCustomer.measurements;
+            m.bust = parseFloat(document.getElementById('m-bust').value) || 0;
+            m.underbust = parseFloat(document.getElementById('m-underbust').value) || 0;
+            m.blouselength = parseFloat(document.getElementById('m-blouselength').value) || 0;
+            m.shoulder = parseFloat(document.getElementById('m-shoulder').value) || 0;
+            m.frontneck = parseFloat(document.getElementById('m-frontneck').value) || 0;
+            m.backneck = parseFloat(document.getElementById('m-backneck').value) || 0;
+            m.sleevelength = parseFloat(document.getElementById('m-sleevelength').value) || 0;
+            m.armhole = parseFloat(document.getElementById('m-armhole').value) || 0;
+            m.waist = parseFloat(document.getElementById('m-waist').value) || 0;
+            m.hip = parseFloat(document.getElementById('m-hip').value) || 0;
+            m.kameezlength = parseFloat(document.getElementById('m-kameezlength').value) || 0;
+            m.pantlength = parseFloat(document.getElementById('m-pantlength').value) || 0;
+            m.notes = document.getElementById('m-notes').value;
+            
+            currentCustomer.lastVerified = 'Just Now (Customer Self-Updated)';
+            toggleMeasurementEdit();
+            renderCustomerProfile();
+            renderAdminCustomerCards();
+            showToast('Measurement profile updated & saved to your account!');
+        }
+
+        function saveCustomerProfile() {
+            currentCustomer.name = document.getElementById('cust-input-name').value;
+            currentCustomer.age = document.getElementById('cust-input-age').value;
+            currentCustomer.phone = document.getElementById('cust-input-phone').value;
+            currentCustomer.address = document.getElementById('cust-input-address').value;
+            
+            renderCustomerProfile();
+            showToast('Personal contact details updated successfully!');
+        }
+
+        function renderCustomerOrdersList() {
+            const container = document.getElementById('cust-orders-list');
+            container.innerHTML = '';
+
+            const myOrders = ordersData.filter(o => o.customerName === currentCustomer.name);
+
+            if (myOrders.length === 0) {
+                container.innerHTML = `<p class="text-xs text-stone-500 italic">No active orders placed yet.</p>`;
+                return;
+            }
+
+            myOrders.forEach(ord => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-3 rounded-lg border border-amber-200/80 shadow-2xs flex justify-between items-center text-xs";
+                
+                let statusBadge = 'bg-yellow-100 text-yellow-800';
+                if (ord.status === 'Accepted') statusBadge = 'bg-emerald-100 text-emerald-800';
+                if (ord.status === 'Rejected') statusBadge = 'bg-rose-100 text-rose-800';
+                if (ord.status === 'Completed') statusBadge = 'bg-blue-100 text-blue-800';
+
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-stone-800">${ord.garmentType} (${ord.id})</div>
+                        <div class="text-stone-500">Delivery Date: <span class="font-semibold text-rose-900">${ord.deliveryDate}</span></div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase ${statusBadge}">
+                        ${ord.status}
+                    </span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+
+        // ==========================================
+        // ORDER PLACEMENT & BRIDAL LOGIC
+        // ==========================================
+        function handlePlaceOrder(e) {
+            e.preventDefault();
+            const garment = document.querySelector('input[name="garment_type"]:checked').value;
+            const fabric = document.getElementById('order-fabric-source').value;
+            const reqDate = document.getElementById('order-requested-date').value;
+            const neck = document.getElementById('order-neck-style').value;
+            const back = document.getElementById('order-back-style').value;
+            const notes = document.getElementById('order-instructions').value;
+
+            const newOrder = {
+                id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
+                customerName: currentCustomer.name,
+                customerPhone: currentCustomer.phone,
+                garmentType: garment,
+                fabricSource: fabric,
+                neckStyle: `${neck || 'Standard Neck'} / ${back || 'Standard Back'}`,
+                orderDate: getFormattedDate(0),
+                requestedDate: reqDate,
+                deliveryDate: 'Pending Shop Approval', // Shop owner assigns actual date!
+                status: 'Pending',
+                isBridal: false,
+                notes: notes || 'No extra notes'
+            };
+
+            ordersData.unshift(newOrder);
+            renderCustomerOrdersList();
+            renderAdminOrders();
+            updateAlertNotificationCount();
+
+            e.target.reset();
+            showToast('Order submitted! The shop will review and assign your final delivery date.');
+            switchTab('customer-dash');
+        }
+
+        function handleBridalOrder(e) {
+            e.preventDefault();
+            const brideName = document.getElementById('bridal-name').value;
+            const weddingDate = document.getElementById('bridal-wedding-date').value;
+            const pkg = document.getElementById('bridal-package').value;
+            const emb = document.getElementById('bridal-embroidery-type').value;
+            const notes = document.getElementById('bridal-notes').value;
+
+            const newBridalOrder = {
+                id: 'BRD-' + Math.floor(1000 + Math.random() * 9000),
+                customerName: brideName,
+                customerPhone: currentCustomer.phone,
+                garmentType: 'Bridal Package',
+                fabricSource: 'Shop Bridal Trousseau',
+                neckStyle: pkg,
+                orderDate: getFormattedDate(0),
+                requestedDate: weddingDate,
+                deliveryDate: 'Pending Consultation',
+                status: 'Pending',
+                isBridal: true,
+                notes: `Wedding Date: ${weddingDate}. Package: ${pkg}. Embroidery Style: ${emb}. Notes: ${notes}`
+            };
+
+            ordersData.unshift(newBridalOrder);
+            renderCustomerOrdersList();
+            renderAdminOrders();
+            updateAlertNotificationCount();
+
+            showToast('Bridal tailoring request submitted! Our senior master designer will contact you.');
+            switchTab('customer-dash');
+        }
+
+
+        // ==========================================
+        // SHOP OWNER ADMIN & AUTOMATED ALERT ENGINE
+        // ==========================================
+        function renderAdminOrders() {
+            const tbody = document.getElementById('admin-orders-table-body');
+            tbody.innerHTML = '';
+
+            const searchTerm = (document.getElementById('order-search').value || '').toLowerCase();
+
+            const filteredOrders = ordersData.filter(o => 
+                o.customerName.toLowerCase().includes(searchTerm) || 
+                o.id.toLowerCase().includes(searchTerm) ||
+                o.garmentType.toLowerCase().includes(searchTerm)
+            );
+
+            filteredOrders.forEach(ord => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-stone-50 transition border-b border-stone-100";
+
+                let statusBadge = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+                if (ord.status === 'Accepted') statusBadge = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                if (ord.status === 'Rejected') statusBadge = 'bg-rose-100 text-rose-800 border-rose-300';
+                if (ord.status === 'Completed') statusBadge = 'bg-blue-100 text-blue-800 border-blue-300';
+
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div class="font-bold text-stone-900">${ord.id} ${ord.isBridal ? '<span class="bg-amber-100 text-amber-900 text-[10px] px-2 py-0.5 rounded-full font-bold"><i class="fa-solid fa-crown text-amber-600"></i> Bridal</span>' : ''}</div>
+                        <div class="text-xs text-stone-400">Placed: ${ord.orderDate}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="font-bold text-stone-800">${ord.customerName}</div>
+                        <div class="text-xs text-stone-500">${ord.customerPhone}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="font-semibold text-rose-900">${ord.garmentType}</div>
+                        <div class="text-xs text-stone-500 truncate max-w-xs">${ord.neckStyle}</div>
+                        <div class="text-[11px] text-stone-400 italic">${ord.notes}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex flex-col space-y-1">
+                            <input type="date" value="${ord.deliveryDate !== 'Pending Assignment' && ord.deliveryDate !== 'Pending Shop Approval' ? ord.deliveryDate : ''}" 
+                                   onchange="assignDeliveryDate('${ord.id}', this.value)" 
+                                   class="border border-stone-300 rounded px-2 py-1 text-xs outline-none focus:ring-1 focus:ring-rose-800 bg-amber-50/50 font-bold text-stone-800">
+                            <span class="text-[10px] text-stone-400">Requested: ${ord.requestedDate}</span>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${statusBadge}">
+                            ${ord.status}
+                        </span>
+                    </td>
+                    <td class="p-4 text-center">
+                        <div class="flex justify-center items-center space-x-2">
+                            ${ord.status === 'Pending' ? `
+                                <button onclick="updateOrderStatus('${ord.id}', 'Accepted')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold shadow-xs">Accept</button>
+                                <button onclick="updateOrderStatus('${ord.id}', 'Rejected')" class="px-2.5 py-1 bg-rose-800 hover:bg-rose-900 text-white rounded text-xs font-bold shadow-xs">Reject</button>
+                            ` : `
+                                <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs border border-stone-300 rounded px-2 py-1 bg-white">
+                                    <option value="Accepted" ${ord.status==='Accepted'?'selected':''}>Accepted</option>
+                                    <option value="In Progress" ${ord.status==='In Progress'?'selected':''}>In Progress</option>
+                                    <option value="Ready For Delivery" ${ord.status==='Ready For Delivery'?'selected':''}>Ready</option>
+                                    <option value="Completed" ${ord.status==='Completed'?'selected':''}>Completed</option>
+                                    <option value="Rejected" ${ord.status==='Rejected'?'selected':''}>Rejected</option>
+                                </select>
+                            `}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            renderDeliveryAlerts();
+        }
+
+        function assignDeliveryDate(orderId, dateValue) {
+            const ord = ordersData.find(o => o.id === orderId);
+            if (ord) {
+                ord.deliveryDate = dateValue;
+                if (ord.status === 'Pending') ord.status = 'Accepted';
+                renderAdminOrders();
+                renderCustomerOrdersList();
+                showToast(`Official delivery date assigned (${dateValue}) for ${ord.id}`);
+            }
+        }
+
+        function updateOrderStatus(orderId, status) {
+            const ord = ordersData.find(o => o.id === orderId);
+            if (ord) {
+                ord.status = status;
+                // Auto assign requested date if no delivery date was set
+                if (status === 'Accepted' && (ord.deliveryDate.includes('Pending'))) {
+                    ord.deliveryDate = ord.requestedDate;
+                }
+                renderAdminOrders();
+                renderCustomerOrdersList();
+                showToast(`Order ${ord.id} status updated to: ${status}`);
+            }
+        }
+
+        // ==========================================
+        // AUTOMATED DELIVERY NOTIFICATION LOGIC (2-3 DAYS & TODAY)
+        // ==========================================
+        function renderDeliveryAlerts() {
+            const alertContainer = document.getElementById('admin-delivery-alerts-list');
+            alertContainer.innerHTML = '';
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            let dueTodayCount = 0;
+            let dueSoonCount = 0;
+            let pendingCount = 0;
+
+            ordersData.forEach(ord => {
+                if (ord.status === 'Pending') pendingCount++;
+
+                if (ord.deliveryDate && !ord.deliveryDate.includes('Pending') && ord.status !== 'Completed' && ord.status !== 'Rejected') {
+                    const delDate = new Date(ord.deliveryDate);
+                    delDate.setHours(0,0,0,0);
+
+                    const diffTime = delDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                    if (diffDays === 0) {
+                        // DUE TODAY!
+                        dueTodayCount++;
+                        createAlertCard(alertContainer, ord, 'URGENT: Delivery Due TODAY!', 'bg-red-100 border-red-300 text-red-900', 'fa-circle-exclamation text-red-600', '0 Days Remaining');
+                    } else if (diffDays > 0 && diffDays <= 3) {
+                        // DUE IN 2-3 DAYS!
+                        dueSoonCount++;
+                        createAlertCard(alertContainer, ord, `Upcoming Delivery (${diffDays} days left)`, 'bg-amber-100 border-amber-300 text-amber-900', 'fa-clock text-amber-600', `Due in ${diffDays} day(s)`);
+                    }
+                }
+            });
+
+            // Update Header Stats Cards
+            document.getElementById('stat-due-today').innerText = dueTodayCount;
+            document.getElementById('stat-due-soon').innerText = dueSoonCount;
+            document.getElementById('stat-pending').innerText = pendingCount;
+            document.getElementById('stat-total').innerText = ordersData.length;
+
+            if (alertContainer.children.length === 0) {
+                alertContainer.innerHTML = `
+                    <div class="col-span-2 text-center py-6 text-stone-500 text-sm">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-2xl mb-2 block"></i>
+                        No urgent delivery alerts for today or next 3 days! All schedules on track.
+                    </div>
+                `;
+            }
+        }
+
+        function createAlertCard(container, ord, alertTitle, styleClasses, iconClass, tagText) {
+            const div = document.createElement('div');
+            div.className = `p-4 rounded-xl border shadow-xs flex justify-between items-center ${styleClasses}`;
+            div.innerHTML = `
+                <div class="space-y-1">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid ${iconClass}"></i>
+                        <span class="font-bold text-sm uppercase">${alertTitle}</span>
+                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-white/80">${tagText}</span>
+                    </div>
+                    <p class="text-xs font-semibold">${ord.customerName} - <span class="font-bold">${ord.garmentType} (${ord.id})</span></p>
+                    <p class="text-[11px] opacity-80"><i class="fa-solid fa-phone mr-1"></i>${ord.customerPhone} | Delivery: <strong>${ord.deliveryDate}</strong></p>
+                </div>
+                <button onclick="updateOrderStatus('${ord.id}', 'Ready For Delivery')" class="px-3 py-1.5 bg-stone-900 text-white hover:bg-black rounded-lg text-xs font-bold shadow-xs whitespace-nowrap">
+                    Mark Ready
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function updateAlertNotificationCount() {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            let urgentAlerts = 0;
+
+            ordersData.forEach(ord => {
+                if (ord.deliveryDate && !ord.deliveryDate.includes('Pending') && ord.status !== 'Completed' && ord.status !== 'Rejected') {
+                    const delDate = new Date(ord.deliveryDate);
+                    delDate.setHours(0,0,0,0);
+                    const diffDays = Math.ceil((delDate - today) / (1000 * 60 * 60 * 24));
+                    if (diffDays >= 0 && diffDays <= 3) urgentAlerts++;
+                }
+            });
+
+            const badge = document.getElementById('admin-alert-count');
+            if (badge) badge.innerText = urgentAlerts;
+        }
+
+
+        // ==========================================
+        // CUSTOMER MEASUREMENT DATABASE CARDS (ADMIN)
+        // ==========================================
+        function renderAdminCustomerCards() {
+            const container = document.getElementById('admin-customer-cards-container');
+            container.innerHTML = '';
+
+            customersDatabase.forEach(c => {
+                const m = c.measurements;
+                const card = document.createElement('div');
+                card.className = "bg-stone-50 p-4 rounded-xl border border-stone-200 hover:border-rose-300 transition space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-stone-900">${c.name}</h4>
+                            <p class="text-xs text-stone-500">${c.phone} | Age: ${c.age || 'N/A'}</p>
+                        </div>
+                        <span class="text-[10px] bg-rose-100 text-rose-800 font-mono font-bold px-2 py-0.5 rounded">${c.id}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border border-stone-200 text-center text-xs">
+                        <div><span class="block text-[10px] text-stone-400">BUST</span><span class="font-bold text-rose-900">${m.bust || '--'}"</span></div>
+                        <div><span class="block text-[10px] text-stone-400">WAIST</span><span class="font-bold text-rose-900">${m.waist || '--'}"</span></div>
+                        <div><span class="block text-[10px] text-stone-400">HIP</span><span class="font-bold text-rose-900">${m.hip || '--'}"</span></div>
+                    </div>
+                    <button onclick="switchTab('customer-dash')" class="w-full py-1.5 bg-white hover:bg-rose-50 text-rose-900 border border-rose-200 font-semibold text-xs rounded-lg transition text-center">
+                        View / Edit Profile
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openAddNewCustomerModal() {
+            openModal('modal-add-customer');
+        }
+
+        function handleAdminAddNewCustomer(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-c-name').value;
+            const phone = document.getElementById('new-c-phone').value;
+            const age = document.getElementById('new-c-age').value;
+            const bust = document.getElementById('new-c-bust').value;
+            const waist = document.getElementById('new-c-waist').value;
+            const hip = document.getElementById('new-c-hip').value;
+            const shoulder = document.getElementById('new-c-shoulder').value;
+            const address = document.getElementById('new-c-address').value;
+
+            const newCust = {
+                id: 'ST-' + Math.floor(1000 + Math.random() * 9000),
+                name,
+                phone,
+                age: age || 25,
+                address: address || 'No address provided',
+                measurements: {
+                    bust: parseFloat(bust) || 0,
+                    waist: parseFloat(waist) || 0,
+                    hip: parseFloat(hip) || 0,
+                    shoulder: parseFloat(shoulder) || 0,
+                    notes: 'Directly added by Shop Owner'
+                },
+                lastVerified: 'Just Now (By Shop Owner)'
+            };
+
+            customersDatabase.push(newCust);
+            renderAdminCustomerCards();
+            closeModal('modal-add-customer');
+            showToast(`New customer measurement record saved for ${name}!`);
+        }
+
+    </script>
+</body>
+</html>

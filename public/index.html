@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Shine Tailors | Designer Tailoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="top"><div class="brand"><div class="logo">ST</div><div><b>The Shine Tailors</b><small>Women's boutique · Bespoke stitching</small></div></div>
+<nav><a href="#gallery">Design gallery</a><a href="#customer">My dashboard</a><a href="#orders">My orders</a><a href="#bridal">Marriage orders</a><button id="loginOpen" class="btn btn-outline">Login / Register</button><button id="logoutBtn" class="btn btn-outline hidden">Logout</button></nav></header>
+<main>
+<section class="hero"><div><span class="eyebrow">MADE TO MEASURE · MADE WITH LOVE</span><h1>Perfect fit.<br><em>Timeless elegance.</em></h1><p>Designer blouses, custom chudidars and handcrafted Aari embroidery — stitched to your measurements.</p><div class="actions"><a class="btn btn-gold" href="#orders">Place a tailoring order</a><a class="btn btn-light" href="#gallery">Explore our work</a></div></div><div class="hero-note"><span>✦</span><b>THE SHINE PROMISE</b><p>Every stitch tells your story.</p></div></section>
+
+<section id="gallery" class="section"><div class="section-head"><div><span class="eyebrow">OUR CRAFT</span><h2>Design portfolio</h2><p>Browse our sample work and choose a style for your order.</p></div><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="blouses">Blouses</button><button class="filter" data-filter="chudidar">Chudidars</button><button class="filter" data-filter="embroidery">Embroidery</button></div></div><div id="galleryGrid" class="gallery-grid"></div></section>
+
+<section id="customer" class="section tinted"><div class="section-head"><div><span class="eyebrow">YOUR ACCOUNT</span><h2>Customer dashboard</h2><p>Sign in to save your profile and measurements securely.</p></div></div>
+<div id="guestMessage" class="panel"><p>Please log in or register to view your personal dashboard.</p><button class="btn btn-primary" id="loginOpen2">Login / Register</button></div>
+<div id="customerPanel" class="dashboard hidden">
+  <div class="panel"><h3>Personal information</h3><form id="profileForm" class="form-grid"><label>Full name<input name="name" required></label><label>Age<input name="age" type="number" min="1" max="120"></label><label>Phone number<input name="phone" type="tel"></label><label class="span2">Address<textarea name="address" rows="2"></textarea></label><button class="btn btn-primary">Save profile</button></form></div>
+  <div class="panel"><h3>Body measurements <small>(inches)</small></h3><p class="muted">You can enter your own measurements or ask the shop to take and upload them.</p><form id="measureForm" class="measure-grid"></form><button form="measureForm" class="btn btn-primary">Save measurements</button>
+  <hr><form id="measureUploadForm" class="upload-row"><label>Upload measurement sheet / photo<input type="file" name="image" accept="image/png,image/jpeg,image/webp" required></label><button class="btn btn-outline">Upload to shop profile</button></form><p id="measureFileLink"></p></div>
+</div></section>
+
+<section id="orders" class="section"><div class="section-head"><div><span class="eyebrow">STITCH WITH US</span><h2>Place a tailoring order</h2><p>The shop owner reviews every request and assigns the delivery date.</p></div></div>
+<div class="two-col"><form id="orderForm" class="panel form-grid"><label>Garment type<select name="garmentType" required><option value="">Choose</option><option>Blouse</option><option>Chudidar</option><option>Embroidery work</option><option>Other</option></select></label><label>Category<select name="category" required><option value="Regular">Regular tailoring</option><option value="Designer">Designer stitching</option></select></label><label>Fabric source<select name="fabricSource"><option>Provided by customer</option><option>Purchase from shop</option><option>Discuss with shop</option></select></label><label>Design reference / style<input name="designDetails" placeholder="Neck style, sleeve, pattern..."></label><label class="span2">Additional notes<textarea name="notes" rows="3" placeholder="Tell us about your requirements"></textarea></label><button class="btn btn-primary span2">Send order request</button></form><div class="panel order-info"><div class="big-icon">✂</div><h3>What happens next?</h3><ol><li>Your request reaches the shop owner.</li><li>The owner accepts or rejects the order.</li><li>If accepted, the shop assigns your delivery date.</li><li>Track the order status from your dashboard.</li></ol><p class="muted">Delivery dates are decided by The Shine Tailors, not by customers.</p></div></div>
+<div class="panel order-list"><h3>Your order history</h3><div id="myOrders"><p class="muted">Log in to see your orders.</p></div></div></section>
+
+<section id="bridal" class="section bridal"><div><span class="eyebrow">SPECIAL OCCASIONS</span><h2>Marriage & bridal tailoring</h2><p>For wedding blouses, bridesmaid outfits, family sets and detailed embroidery. Submit a dedicated bridal request below.</p></div><form id="bridalForm" class="panel form-grid"><label>Event / wedding date<input name="eventDate" type="date"></label><label>Garment type<input name="garmentType" value="Bridal blouse / wedding outfit" required></label><label class="span2">Outfit details<textarea name="designDetails" rows="3" placeholder="Number of outfits, blouse styles, embroidery, family orders..."></textarea></label><label class="span2">Additional notes<textarea name="notes" rows="2"></textarea></label><button class="btn btn-gold span2">Send marriage tailoring request</button></form></section>
+
+<section id="owner" class="section tinted hidden"><div class="section-head"><div><span class="eyebrow">PRIVATE AREA</span><h2>Shop owner dashboard</h2><p>Manage requests, assign delivery dates, update customers and publish designs.</p></div></div>
+<div class="admin-grid"><div class="panel"><h3>Order management</h3><div id="adminOrders"></div></div><div class="panel"><h3>Publish a design</h3><form id="galleryForm" class="form-grid"><label>Title<input name="title" required></label><label>Category<select name="category"><option value="blouses">Blouses</option><option value="chudidar">Chudidar</option><option value="embroidery">Embroidery</option></select></label><label class="span2">Description<textarea name="description" rows="2"></textarea></label><label class="span2">Image file<input type="file" name="image" accept="image/png,image/jpeg,image/webp"></label><button class="btn btn-primary span2">Publish design</button></form></div><div class="panel span2"><h3>Customer measurement records</h3><div id="adminCustomers"></div></div></div></section>
+</main>
+<footer><b>The Shine Tailors</b><span>Designer blouses · Chudidars · Aari embroidery</span><small>© 2026 The Shine Tailors</small></footer>
+
+<dialog id="authDialog"><form id="authForm" method="dialog"><button type="button" class="close" id="closeAuth">×</button><span class="eyebrow">WELCOME</span><h2 id="authTitle">Login</h2><div id="registerNameWrap" class="hidden"><label>Your name<input name="name"></label><label>Phone<input name="phone"></label></div><label>Email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="8" required></label><button class="btn btn-primary full" id="authSubmit">Login</button><p id="authSwitch">New customer? <a href="#" id="switchAuth">Create an account</a></p><p id="authError" class="error"></p></form></dialog>
+<div id="toast" role="status"></div>
+<script src="/app.js"></script>
+</body></html>
